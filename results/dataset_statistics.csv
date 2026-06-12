@@ -1,0 +1,9 @@
+class,video_count,min_duration,max_duration,avg_duration
+1. loud,21,1.68,3.04,2.223
+2. quiet,21,1.8,3.04,2.387
+3. happy,21,1.44,3.12,2.12
+4. sad,8,2.36,2.96,2.615
+5. Beautiful,8,2.2,3.16,2.725
+6. Ugly,8,2.08,3.08,2.44
+7. Deaf,8,2.0,2.44,2.25
+8. Blind,8,2.08,2.4,2.26

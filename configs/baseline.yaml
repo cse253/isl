@@ -1,0 +1,34 @@
+project:
+  name: "Adaptive Multi-Modal Fusion Transformer for Indian Sign Language Recognition"
+  experiment_name: "experiment_001_rgb_baseline"
+
+data:
+  root: "datasets/Adjectives_1of8/Adjectives"
+  train_csv: "splits/train.csv"
+  val_csv: "splits/val.csv"
+  test_csv: "splits/test.csv"
+  num_classes: 8
+  img_size: 224
+  num_frames: 16
+
+model:
+  backbone: "resnet50"
+  d_model: 512
+  nhead: 8
+  transformer_layers: 4
+  dropout: 0.1
+
+training:
+  batch_size: 4
+  epochs: 10
+  lr: 0.0001
+  weight_decay: 0.0001
+  optimizer: "adamw"
+
+paths:
+  checkpoint_dir: "checkpoints"
+  best_model: "checkpoints/best_model.pth"
+  results_dir: "results"
+  training_log: "results/training_log.csv"
+  confusion_matrix: "results/confusion_matrix.png"
+  classification_report: "results/classification_report.txt"
