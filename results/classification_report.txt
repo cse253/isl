@@ -1,0 +1,14 @@
+Test Accuracy: 0.8182
+
+              precision    recall  f1-score   support
+
+        loud       1.00      1.00      1.00         3
+       quiet       1.00      1.00      1.00         4
+       happy       1.00      1.00      1.00         1
+         sad       1.00      1.00      1.00         1
+        Ugly       0.00      0.00      0.00         2
+        Deaf       0.00      0.00      0.00         0
+
+    accuracy                           0.82        11
+   macro avg       0.67      0.67      0.67        11
+weighted avg       0.82      0.82      0.82        11
