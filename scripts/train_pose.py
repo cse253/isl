@@ -92,6 +92,12 @@ def run_epoch(model, loader, criterion, optimizer, device, training: bool):
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
+    # Check if checkpoint already exists to save time on CPU
+    ckpt_path = Path(ROOT) / cfg["paths"]["checkpoint_dir"] / "best_pose_model.pth"
+    if ckpt_path.exists() and "--force" not in sys.argv:
+        print(f"[INFO] Pre-trained model found at {ckpt_path.relative_to(ROOT)}. Skipping training (use --force to retrain).")
+        sys.exit(0)
+
     ckpt_dir    = Path(ROOT) / cfg["paths"]["checkpoint_dir"]
     results_dir = Path(ROOT) / cfg["paths"]["results_dir"]
     ckpt_dir.mkdir(parents=True, exist_ok=True)
@@ -143,7 +149,7 @@ if __name__ == "__main__":
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             torch.save(model.state_dict(), ckpt_dir / "best_pose_model.pth")
-            print(f"  ✔ Best pose model saved (val_acc={best_val_acc:.4f})")
+            print(f"  [OK] Best pose model saved (val_acc={best_val_acc:.4f})")
 
     log_path = results_dir / "training_log_pose.csv"
     with open(log_path, "w", newline="") as f:
@@ -152,4 +158,4 @@ if __name__ == "__main__":
         writer.writerows(log_rows)
 
     print(f"\n[INFO] Training complete. Best Val Acc: {best_val_acc:.4f}")
-    print(f"[INFO] Log saved → {log_path}")
+    print(f"[INFO] Log saved -> {log_path}")

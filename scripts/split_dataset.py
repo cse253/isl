@@ -100,9 +100,9 @@ if __name__ == "__main__":
     test_df.to_csv(SPLITS_DIR / "test.csv",  index=False)
 
     print(f"\n[INFO] Splits saved to: {SPLITS_DIR}")
-    print(f"  train.csv → {len(train_df)} samples")
-    print(f"  val.csv   → {len(val_df)} samples")
-    print(f"  test.csv  → {len(test_df)} samples")
+    print(f"  train.csv -> {len(train_df)} samples")
+    print(f"  val.csv   -> {len(val_df)} samples")
+    print(f"  test.csv  -> {len(test_df)} samples")
 
     print_distribution("train.csv", train_df)
     print_distribution("val.csv",   val_df)

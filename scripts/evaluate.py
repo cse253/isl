@@ -105,7 +105,7 @@ if __name__ == "__main__":
     with open(report_path, "w") as f:
         f.write(f"Test Accuracy: {accuracy:.4f}\n\n")
         f.write(report)
-    print(f"[INFO] Report saved  → {report_path}")
+    print(f"[INFO] Report saved  -> {report_path}")
 
     # Confusion matrix — only rows/cols for classes present in test set
     cm = confusion_matrix(all_labels, all_preds, labels=present_ids)
@@ -120,4 +120,4 @@ if __name__ == "__main__":
     cm_path = Path(ROOT) / cfg["paths"]["confusion_matrix"]
     fig.savefig(cm_path, dpi=150)
     plt.close(fig)
-    print(f"[INFO] Confusion matrix saved → {cm_path}")
+    print(f"[INFO] Confusion matrix saved -> {cm_path}")

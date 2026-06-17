@@ -1,0 +1,262 @@
+Adaptive Multi-Modal Fusion Transformer - Full Project Run Log
+Started: Mon Jun 15 14:47:20 2026
+================================================================================
+
+
+--- STEP 1: Dataset Exploration (scripts/explore_dataset.py) ---
+[INFO] Scanning: D:\NIT proj\Adaptive_signlang\datasets\Adjectives_1of8\Adjectives
+[INFO] Found 8 classes, computing durations ...
+
+=======================================================
+  ISL Dataset - Adjectives (8 classes)
+=======================================================
+  Class                Videos     Min     Max     Avg
+  --------------------  ------  ------  ------  ------
+  1. loud                  21    1.68s    3.04s    2.22s
+  2. quiet                 21    1.80s    3.04s    2.39s
+  3. happy                 21    1.44s    3.12s    2.12s
+  4. sad                    8    2.36s    2.96s    2.62s
+  5. Beautiful              8    2.20s    3.16s    2.73s
+  6. Ugly                   8    2.08s    3.08s    2.44s
+  7. Deaf                   8    2.00s    2.44s    2.25s
+  8. Blind                  8    2.08s    2.40s    2.26s
+  -------------------------------------------------
+  TOTAL                   103
+=======================================================
+
+[INFO] CSV saved  -> D:\NIT proj\Adaptive_signlang\results\dataset_statistics.csv
+[INFO] Plot saved -> D:\NIT proj\Adaptive_signlang\results\class_distribution.png
+[INFO] Sample grid saved -> D:\NIT proj\Adaptive_signlang\results\class_sample_frames.png
+
+Duration: 6.36 seconds
+Return Code: 0
+
+--- STEP 2: Train/Val/Test Split (scripts/split_dataset.py) ---
+[INFO] Scanning: D:\NIT proj\Adaptive_signlang\datasets\Adjectives_1of8\Adjectives
+
+[INFO] Total videos : 103
+[INFO] Classes      : 8
+[INFO] Label map    : {'loud': 0, 'quiet': 1, 'happy': 2, 'sad': 3, 'Beautiful': 4, 'Ugly': 5, 'Deaf': 6, 'Blind': 7}
+[WARN] Stratified split failed (The least populated classes in y have only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2. Classes with too few members are: [3]). Using random split.
+
+[INFO] Splits saved to: D:\NIT proj\Adaptive_signlang\splits
+  train.csv -> 82 samples
+  val.csv   -> 10 samples
+  test.csv  -> 11 samples
+
+  train.csv (82 samples):
+    Beautiful       7
+    Blind           6
+    Deaf            7
+    Ugly            6
+    happy           17
+    loud            16
+    quiet           16
+    sad             7
+
+  val.csv (10 samples):
+    Beautiful       1
+    Blind           2
+    Deaf            1
+    happy           3
+    loud            2
+    quiet           1
+
+  test.csv (11 samples):
+    Ugly            2
+    happy           1
+    loud            3
+    quiet           4
+    sad             1
+
+Duration: 5.41 seconds
+Return Code: 0
+
+--- STEP 3: RGB Baseline Training (scripts/train.py) ---
+[INFO] Pre-trained model found at checkpoints\best_model.pth. Skipping training (use --force to retrain).
+
+Duration: 10.63 seconds
+Return Code: 0
+
+--- STEP 4: RGB Baseline Evaluation (scripts/evaluate.py) ---
+[INFO] Using device: cpu
+[INFO] Test samples: 11
+[INFO] Loaded checkpoint: D:\NIT proj\Adaptive_signlang\checkpoints\best_model.pth
+
+[RESULT] Test Accuracy: 0.8182 (81.82%)
+[INFO] Report saved  -> D:\NIT proj\Adaptive_signlang\results\classification_report.txt
+[INFO] Confusion matrix saved -> D:\NIT proj\Adaptive_signlang\results\confusion_matrix.png
+
+Duration: 53.54 seconds
+Return Code: 0
+
+--- STEP 5: Pose Landmark Extraction (scripts/extract_pose.py) ---
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[INFO] Scanning : D:\NIT proj\Adaptive_signlang\datasets\Adjectives_1of8\Adjectives
+[INFO] Output   : D:\NIT proj\Adaptive_signlang\datasets\pose_data
+[INFO] Frames   : 16  |  Landmark dim: 258
+
+[CLASS] 1. loud  (21 videos)
+  [SKIP] MVI_5177.MOV already extracted
+  [SKIP] MVI_5178.MOV already extracted
+  [SKIP] MVI_5179.MOV already extracted
+  [SKIP] MVI_5257.MOV already extracted
+  [SKIP] MVI_5258.MOV already extracted
+  [SKIP] MVI_5259.MOV already extracted
+  [SKIP] MVI_5335.MOV already extracted
+  [SKIP] MVI_5336.MOV already extracted
+  [SKIP] MVI_5337.MOV already extracted
+  [SKIP] MVI_9289.MOV already extracted
+  [SKIP] MVI_9290.MOV already extracted
+  [SKIP] MVI_9291.MOV already extracted
+  [SKIP] MVI_9368.MOV already extracted
+  [SKIP] MVI_9369.MOV already extracted
+  [SKIP] MVI_9370.MOV already extracted
+  [SKIP] MVI_9448.MOV already extracted
+  [SKIP] MVI_9449.MOV already extracted
+  [SKIP] MVI_9450.MOV already extracted
+  [SKIP] MVI_9534.MOV already extracted
+  [SKIP] MVI_9535.MOV already extracted
+  [SKIP] MVI_9536.MOV already extracted
+[CLASS] 2. quiet  (21 videos)
+  [SKIP] MVI_5180.MOV already extracted
+  [SKIP] MVI_5181.MOV already extracted
+  [SKIP] MVI_5182.MOV already extracted
+  [SKIP] MVI_5260.MOV already extracted
+  [SKIP] MVI_5261.MOV already extracted
+  [SKIP] MVI_5262.MOV already extracted
+  [SKIP] MVI_5338.MOV already extracted
+  [SKIP] MVI_5339.MOV already extracted
+  [SKIP] MVI_5340.MOV already extracted
+  [SKIP] MVI_9292.MOV already extracted
+  [SKIP] MVI_9293.MOV already extracted
+  [SKIP] MVI_9294.MOV already extracted
+  [SKIP] MVI_9371.MOV already extracted
+  [SKIP] MVI_9372.MOV already extracted
+  [SKIP] MVI_9373.MOV already extracted
+  [SKIP] MVI_9451.MOV already extracted
+  [SKIP] MVI_9452.MOV already extracted
+  [SKIP] MVI_9453.MOV already extracted
+  [SKIP] MVI_9537.MOV already extracted
+  [SKIP] MVI_9538.MOV already extracted
+  [SKIP] MVI_9539.MOV already extracted
+[CLASS] 3. happy  (21 videos)
+  [SKIP] MVI_5183.MOV already extracted
+  [SKIP] MVI_5184.MOV already extracted
+  [SKIP] MVI_5185.MOV already extracted
+  [SKIP] MVI_5263.MOV already extracted
+  [SKIP] MVI_5264.MOV already extracted
+  [SKIP] MVI_5265.MOV already extracted
+  [SKIP] MVI_5341.MOV already extracted
+  [SKIP] MVI_5342.MOV already extracted
+  [SKIP] MVI_5343.MOV already extracted
+  [SKIP] MVI_9295.MOV already extracted
+  [SKIP] MVI_9296.MOV already extracted
+  [SKIP] MVI_9297.MOV already extracted
+  [SKIP] MVI_9374.MOV already extracted
+  [SKIP] MVI_9375.MOV already extracted
+  [SKIP] MVI_9376.MOV already extracted
+  [SKIP] MVI_9454.MOV already extracted
+  [SKIP] MVI_9455.MOV already extracted
+  [SKIP] MVI_9456.MOV already extracted
+  [SKIP] MVI_9540.MOV already extracted
+  [SKIP] MVI_9541.MOV already extracted
+  [SKIP] MVI_9542.MOV already extracted
+[CLASS] 4. sad  (8 videos)
+  [SKIP] MVI_9565.MOV already extracted
+  [SKIP] MVI_9566.MOV already extracted
+  [SKIP] MVI_9567.MOV already extracted
+  [SKIP] MVI_9568.MOV already extracted
+  [SKIP] MVI_9719.MOV already extracted
+  [SKIP] MVI_9720.MOV already extracted
+  [SKIP] MVI_9721.MOV already extracted
+  [SKIP] MVI_9722.MOV already extracted
+[CLASS] 5. Beautiful  (8 videos)
+  [SKIP] MVI_9569.MOV already extracted
+  [SKIP] MVI_9570.MOV already extracted
+  [SKIP] MVI_9571.MOV already extracted
+  [SKIP] MVI_9572.MOV already extracted
+  [SKIP] MVI_9723.MOV already extracted
+  [SKIP] MVI_9724.MOV already extracted
+  [SKIP] MVI_9725.MOV already extracted
+  [SKIP] MVI_9726.MOV already extracted
+[CLASS] 6. Ugly  (8 videos)
+  [SKIP] MVI_9576.MOV already extracted
+  [SKIP] MVI_9577.MOV already extracted
+  [SKIP] MVI_9578.MOV already extracted
+  [SKIP] MVI_9579.MOV already extracted
+  [SKIP] MVI_9844.MOV already extracted
+  [SKIP] MVI_9845.MOV already extracted
+  [SKIP] MVI_9846.MOV already extracted
+  [SKIP] MVI_9847.MOV already extracted
+[CLASS] 7. Deaf  (8 videos)
+  [SKIP] MVI_9580.MOV already extracted
+  [SKIP] MVI_9581.MOV already extracted
+  [SKIP] MVI_9582.MOV already extracted
+  [SKIP] MVI_9583.MOV already extracted
+  [SKIP] MVI_9848.MOV already extracted
+  [SKIP] MVI_9849.MOV already extracted
+  [SKIP] MVI_9850.MOV already extracted
+  [SKIP] MVI_9851.MOV already extracted
+[CLASS] 8. Blind  (8 videos)
+  [SKIP] MVI_9584.MOV already extracted
+  [SKIP] MVI_9585.MOV already extracted
+  [SKIP] MVI_9586.MOV already extracted
+  [SKIP] MVI_9587.MOV already extracted
+  [SKIP] MVI_9852.MOV already extracted
+  [SKIP] MVI_9853.MOV already extracted
+  [SKIP] MVI_9854.MOV already extracted
+  [SKIP] MVI_9855.MOV already extracted
+
+=======================================================
+  Extraction complete
+  Total processed : 103
+  Zero-landmark   : 0  (saved as zeros, check these videos)
+  Saved to        : D:\NIT proj\Adaptive_signlang\datasets\pose_data
+=======================================================
+
+Duration: 2.29 seconds
+Return Code: 0
+
+--- STEP 6: Pose Branch Training (scripts/train_pose.py) ---
+[INFO] Pre-trained model found at checkpoints\best_pose_model.pth. Skipping training (use --force to retrain).
+
+Duration: 3.18 seconds
+Return Code: 0
+
+--- STEP 7: Multi-Modal Fusion Training (scripts/train_fusion.py) ---
+
+Duration: 5.56 seconds
+Return Code: 0
+
+--- STEP 8: Adaptive Model Sanity Test (models/adaptive_model.py) ---
+[TEST] Building AdaptiveMultiModalModel (embedding mode) ...
+  logits       : torch.Size([2, 8])
+  alpha        : 0.4479  beta : 0.5521
+  alpha + beta : 1.0000  (must be 1.0000)
+[TEST] PASSED
+
+Duration: 3.22 seconds
+Return Code: 0
+
+--- STEP 9: Adaptive Fusion Training (scripts/train_adaptive.py) ---
+[INFO] Pre-trained model found at checkpoints\best_adaptive_model.pth. Skipping training (use --force to retrain).
+
+Duration: 11.90 seconds
+Return Code: 0
+
+--- STEP 10: Fusion Weights Plotting (scripts/visualize_fusion_weights.py) ---
+
+[INFO] Fusion weight analysis:
+Traceback (most recent call last):
+  File "D:\NIT proj\Adaptive_signlang\scripts\visualize_fusion_weights.py", line 60, in <module>
+    print(f"  Overall avg \u03b1 (RGB)  : {avg_alpha:.4f}")
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u03b1' in position 14: character maps to <undefined>
+
+Duration: 1.53 seconds
+Return Code: 1
+
+--- STEP 11: Week 4 Model Comparison (scripts/week4_compare.py) ---

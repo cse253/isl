@@ -86,16 +86,17 @@ def compute_stats(classes: dict) -> list:
 def print_summary(rows: list):
     total = sum(r["video_count"] for r in rows)
     print(f"\n{'='*55}")
-    print(f"  ISL Dataset — Adjectives (8 classes)")
+    print(f"  ISL Dataset - Adjectives (8 classes)")
     print(f"{'='*55}")
     print(f"  {'Class':<20} {'Videos':>6}  {'Min':>6}  {'Max':>6}  {'Avg':>6}")
     print(f"  {'-'*20}  {'-'*6}  {'-'*6}  {'-'*6}  {'-'*6}")
     for r in rows:
         print(f"  {r['class']:<20} {r['video_count']:>6}  "
               f"{r['min_duration']:>6.2f}s  {r['max_duration']:>6.2f}s  {r['avg_duration']:>6.2f}s")
-    print(f"  {'─'*49}")
+    print(f"  {'-'*49}")
     print(f"  {'TOTAL':<20} {total:>6}")
     print(f"{'='*55}\n")
+
 
 # ── 6. Save CSV ────────────────────────────────────────────────────────────────
 def save_csv(rows: list, path: Path):
@@ -104,7 +105,8 @@ def save_csv(rows: list, path: Path):
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
-    print(f"[INFO] CSV saved  → {path}")
+    print(f"[INFO] CSV saved  -> {path}")
+
 
 # ── 7. Save class distribution bar chart ──────────────────────────────────────
 def save_distribution_plot(rows: list, path: Path):
@@ -122,11 +124,12 @@ def save_distribution_plot(rows: list, path: Path):
     plt.tight_layout()
     fig.savefig(path, dpi=150)
     plt.close(fig)
-    print(f"[INFO] Plot saved → {path}")
+    print(f"[INFO] Plot saved -> {path}")
+
 
 # ── 8. Display sample frames ───────────────────────────────────────────────────
-def show_sample_frames(classes: dict):
-    """Display one middle frame per class in a grid (non-blocking)."""
+def show_sample_frames(classes: dict, out_path: Path):
+    """Save one middle frame per class in a grid."""
     n = len(classes)
     cols = 4
     rows = (n + cols - 1) // cols
@@ -148,7 +151,10 @@ def show_sample_frames(classes: dict):
 
     fig.suptitle("Sample Frame per Class", fontsize=13, fontweight="bold")
     plt.tight_layout()
-    plt.show()
+    fig.savefig(out_path, dpi=150)
+    plt.close(fig)
+    print(f"[INFO] Sample grid saved -> {out_path}")
+
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
@@ -159,10 +165,10 @@ if __name__ == "__main__":
         print("[ERROR] No class folders with .MOV files found. Check DATASET_ROOT.")
         raise SystemExit(1)
 
-    print(f"[INFO] Found {len(classes)} classes, computing durations …")
+    print(f"[INFO] Found {len(classes)} classes, computing durations ...")
     rows = compute_stats(classes)
 
     print_summary(rows)
     save_csv(rows,  RESULTS_DIR / "dataset_statistics.csv")
     save_distribution_plot(rows, RESULTS_DIR / "class_distribution.png")
-    show_sample_frames(classes)
+    show_sample_frames(classes, RESULTS_DIR / "class_sample_frames.png")

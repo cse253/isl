@@ -144,7 +144,7 @@ def train_model(model, model_name: str, ckpt_name: str,
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             torch.save(model.state_dict(), ckpt_dir / ckpt_name)
-            print(f"  ✔ Best {model_name} saved (val_acc={best_val_acc:.4f})")
+            print(f"  [OK] Best {model_name} saved (val_acc={best_val_acc:.4f})")
 
     log_path = results_dir / f"training_log_{ckpt_name.replace('.pth','')}.csv"
     with open(log_path, "w", newline="") as f:
@@ -153,12 +153,18 @@ def train_model(model, model_name: str, ckpt_name: str,
         writer.writerows(log_rows)
 
     print(f"\n[INFO] Best Val Acc: {best_val_acc:.4f}")
-    print(f"[INFO] Log saved → {log_path}")
+    print(f"[INFO] Log saved -> {log_path}")
     return best_val_acc
 
 
 # ── Main ───────────────────────────────────────────────────────────────────────
-if __name__ == "__main__":
+    # Check if checkpoints already exist to save time on CPU
+    late_ckpt = Path(ROOT) / cfg["paths"]["checkpoint_dir"] / "best_late_fusion.pth"
+    concat_ckpt = Path(ROOT) / cfg["paths"]["checkpoint_dir"] / "best_concat_fusion.pth"
+    if late_ckpt.exists() and concat_ckpt.exists() and "--force" not in sys.argv:
+        print(f"[INFO] Pre-trained models found at {late_ckpt.relative_to(ROOT)} and {concat_ckpt.relative_to(ROOT)}. Skipping training (use --force to retrain).")
+        sys.exit(0)
+
     Path(ROOT, cfg["paths"]["checkpoint_dir"]).mkdir(parents=True, exist_ok=True)
     Path(ROOT, cfg["paths"]["results_dir"]).mkdir(parents=True, exist_ok=True)
 

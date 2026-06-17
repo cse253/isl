@@ -57,10 +57,10 @@ if __name__ == "__main__":
     avg_alpha = df["avg_alpha"].mean()
     avg_beta  = df["avg_beta"].mean()
     print(f"\n[INFO] Fusion weight analysis:")
-    print(f"  Overall avg α (RGB)  : {avg_alpha:.4f}")
-    print(f"  Overall avg β (Pose) : {avg_beta:.4f}")
+    print(f"  Overall avg alpha (RGB)  : {avg_alpha:.4f}")
+    print(f"  Overall avg beta (Pose) : {avg_beta:.4f}")
     if avg_alpha > avg_beta:
-        print(f"  → Model relies MORE on RGB  ({avg_alpha:.2%} vs {avg_beta:.2%})")
+        print(f"  -> Model relies MORE on RGB  ({avg_alpha:.2%} vs {avg_beta:.2%})")
     else:
-        print(f"  → Model relies MORE on Pose ({avg_beta:.2%} vs {avg_alpha:.2%})")
-    print(f"\n[INFO] Plot saved → {OUTPUT_PATH}")
+        print(f"  -> Model relies MORE on Pose ({avg_beta:.2%} vs {avg_alpha:.2%})")
+    print(f"\n[INFO] Plot saved -> {OUTPUT_PATH}")

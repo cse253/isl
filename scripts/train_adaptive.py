@@ -92,6 +92,12 @@ def run_epoch(
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
+    # Check if checkpoint already exists to save time on CPU
+    ckpt_path = CKPT_DIR / "best_adaptive_model.pth"
+    if ckpt_path.exists() and "--force" not in sys.argv:
+        print(f"[INFO] Pre-trained model found at {ckpt_path.relative_to(ROOT)}. Skipping training (use --force to retrain).")
+        sys.exit(0)
+
     CKPT_DIR.mkdir(parents=True, exist_ok=True)
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -149,7 +155,7 @@ if __name__ == "__main__":
         if vl_acc > best_val_acc:
             best_val_acc = vl_acc
             torch.save(model.state_dict(), CKPT_DIR / "best_adaptive_model.pth")
-            print(f"  ✔ Best model saved (val_acc={best_val_acc:.4f})")
+            print(f"  [OK] Best model saved (val_acc={best_val_acc:.4f})")
 
     # Save training log
     log_path = RESULTS_DIR / "adaptive_training_log.csv"
@@ -159,4 +165,4 @@ if __name__ == "__main__":
         writer.writerows(log_rows)
 
     print(f"\n[INFO] Training complete. Best Val Acc : {best_val_acc:.4f}")
-    print(f"[INFO] Log saved → {log_path}")
+    print(f"[INFO] Log saved -> {log_path}")
